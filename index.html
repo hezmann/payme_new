@@ -512,13 +512,16 @@
             border-radius: 0;
             margin: 0;
             box-shadow: none;
+            position: relative;
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: clamp(12px, 1.5vw, 20px);
-            gap: clamp(12px, 2vh, 20px);
             min-height: 0;
             overflow: visible;
+            pointer-events: none;
+        }
+        
+        /* Allow pointer events on interactive elements within game-screen */
+        .game-screen > * {
+            pointer-events: auto;
         }
 
         .setup-screen h2 {
@@ -1428,11 +1431,16 @@
         }
 
         .actions {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             gap: 10px;
             justify-content: center;
-            margin: 20px 0;
             flex-wrap: wrap;
+            z-index: 35;
+            pointer-events: auto;
         }
 
         /* Middle content area that expands to fill space between deck and hand */
@@ -1937,12 +1945,52 @@
             
             .winner-hand-fixed {
                 padding: 6px 8px;
-                margin: 0 8px 8px 0;
+                width: 95%;
+                top: 5px;
             }
             
             .winner-hand-fixed h3 {
                 font-size: 12px;
                 margin-bottom: 6px;
+            }
+            
+            .hand-area {
+                width: 95%;
+                bottom: 5px;
+                padding: 10px 12px;
+            }
+            
+            .meld-building-area {
+                width: 95%;
+                bottom: 120px;
+                padding: 8px 10px;
+                max-height: calc(100vh - 450px);
+            }
+            
+            .your-final-play-panel {
+                width: 95%;
+                bottom: 120px;
+                max-height: 35vh;
+            }
+            
+            .game-table {
+                width: 95%;
+                height: 80%;
+            }
+            
+            .table-player-position {
+                min-width: 120px;
+                max-width: 160px;
+                font-size: 11px;
+            }
+            
+            .fanned-card {
+                width: 30px;
+                height: 45px;
+            }
+            
+            .fanned-card::before {
+                font-size: 18px;
             }
         }
         
