@@ -259,9 +259,13 @@
 
         /* Table Layout for Players */
         .table-players-container {
-            position: relative;
-            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             pointer-events: none; /* Allow clicks to pass through to game area */
+            z-index: 10;
         }
 
         .table-player-position {
@@ -375,8 +379,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            fontWeight: bold;
-            fontSize: 11px;
+            font-weight: bold;
+            font-size: 11px;
             color: #1a1a1a;
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
@@ -874,6 +878,8 @@
             border-radius: 12px;
             padding: 15px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 20;
         }
 
         .deck-pile, .discard-pile {
@@ -1373,6 +1379,8 @@
             max-height: 25vh;
             min-height: 100px;
             overflow-y: auto;
+            position: relative;
+            z-index: 15;
         }
         
         .hand-area {
