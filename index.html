@@ -1490,18 +1490,22 @@
         
         /* Fixed winner's hand at top of main game area */
         .winner-hand-fixed {
-            flex: 0 0 auto;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
             background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
             border: 2px solid #28a745;
             border-radius: 12px;
             padding: 8px 12px;
-            margin: 0 12px 8px 0;
             box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
             max-height: 25vh;
             min-height: 100px;
             overflow-y: auto;
-            position: relative;
-            z-index: 15;
+            z-index: 30;
+            pointer-events: auto;
         }
         
         .hand-area {
@@ -1544,22 +1548,25 @@
         }
 
         .meld-building-area {
+            position: absolute;
+            bottom: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
             background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
             border: 2px solid #ffc107;
             padding: clamp(10px, 1.5vh, 16px) clamp(12px, 2vw, 20px);
             border-radius: 12px;
-            margin: clamp(8px, 1vh, 12px) clamp(10px, 1.5vw, 16px);
             box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2);
             box-sizing: border-box;
-            max-width: calc(100% - 2 * clamp(10px, 1.5vw, 16px));
-            align-self: stretch;
-            flex: 1 1 auto;
-            min-height: 250px;
-            max-height: calc(100vh - 400px);
+            max-height: calc(100vh - 500px);
             overflow-y: auto;
             display: flex;
             flex-direction: column;
             gap: 12px;
+            z-index: 35;
+            pointer-events: auto;
         }
         
         /* Make cards in meld-building area smaller (same as winner-hand-card) */
@@ -2232,17 +2239,19 @@
 
 /* --- Your Final Play Panel (matches Your Hand styling) --- */
 .your-final-play-panel {
-  position: fixed;
-  bottom: clamp(12px, 1.5vw, 20px);
-  left: calc(280px + clamp(12px, 1.5vw, 20px));
-  right: clamp(12px, 1.5vw, 20px);
-  z-index: 60;
+  position: absolute;
+  bottom: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1200px;
+  z-index: 35;
   
   /* Match Your Hand panel styling */
-  background: #fff7d6;
+  background: rgba(255, 247, 214, 0.98);
   border: 2px solid #e0b84f;
-  border-radius: 18px;
-  box-shadow: 0 -6px 18px rgba(0,0,0,0.14);
+  border-radius: 12px;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.14);
   padding-bottom: env(safe-area-inset-bottom);
   
   /* Structure for scrollable content */
@@ -2252,13 +2261,15 @@
   flex-direction: column;
   
   /* Limit height to ensure the panel doesn't cover too much of the game area */
-  max-height: 50vh;
+  max-height: 40vh;
   overflow: hidden;
+  pointer-events: auto;
 }
 
-/* If the side panel is collapsed, adjust left position */
+/* Remove the collapsed side panel adjustment since we're now centered */
 .game-content-wrapper:has(.side-panel.collapsed) .your-final-play-panel{
-  left: clamp(12px, 1.5vw, 20px);
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* Inner content area that can scroll if needed */
