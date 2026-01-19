@@ -223,6 +223,7 @@
             overflow: hidden;
         }
         
+        /* Scoreboard Panel - repurposed from side-panel */
         .side-panel {
             width: 280px;
             background: white;
@@ -255,13 +256,149 @@
         .side-panel-toggle.expanded {
             left: 280px;
         }
+
+        /* Table Layout for Players */
+        /* Z-index hierarchy: 
+         * - Side panel toggle: 50 (highest, always accessible)
+         * - Hand area: 40 (player's cards, must be on top)
+         * - Deck area: 20 (draw/discard piles)
+         * - Winner hand fixed: 15 (winner's melds)
+         * - Table player positions: 15 (player info cards)
+         * - Table players container: 10 (overlay container)
+         */
+        .table-players-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none; /* Allow clicks to pass through to game area */
+            z-index: 10;
+        }
+
+        .table-player-position {
+            position: absolute;
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 8px 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-width: 140px;
+            max-width: 180px;
+            pointer-events: auto; /* Enable clicks on player cards */
+            z-index: 15; /* Higher than container to ensure proper stacking */
+        }
+
+        .table-player-position.active {
+            border-color: #2a5298;
+            background: #e3f2fd;
+            box-shadow: 0 4px 8px rgba(42, 82, 152, 0.3);
+        }
+
+        .table-player-position.winner {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        /* Player positions around the table */
+        /* Bottom center (human player) */
+        .table-player-position.position-0 {
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Top left */
+        .table-player-position.position-1 {
+            top: 10px;
+            left: 10px;
+        }
+
+        /* Top center */
+        .table-player-position.position-2 {
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Top right */
+        .table-player-position.position-3 {
+            top: 10px;
+            right: 10px;
+        }
+
+        /* Right center */
+        .table-player-position.position-4 {
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+        }
+
+        /* Bottom right */
+        .table-player-position.position-5 {
+            bottom: 10px;
+            right: 10px;
+        }
+
+        /* Bottom left */
+        .table-player-position.position-6 {
+            bottom: 10px;
+            left: 10px;
+        }
+
+        /* Left center */
+        .table-player-position.position-7 {
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+        }
+
+        .table-player-name {
+            font-weight: 600;
+            font-size: 13px;
+            color: #1e3c72;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+
+        .table-player-avatar {
+            font-size: 18px;
+        }
+
+        .table-player-stats {
+            font-size: 11px;
+            color: #666;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .table-player-quarters {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+            border: 2px solid #b8860b;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 11px;
+            color: #1a1a1a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
         
         .main-game-area {
             flex: 1;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            padding-left: 30px;
+            position: relative;
         }
         
         .game-screen {
@@ -749,6 +886,8 @@
             border-radius: 12px;
             padding: 15px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 20;
         }
 
         .deck-pile, .discard-pile {
@@ -1248,6 +1387,8 @@
             max-height: 25vh;
             min-height: 100px;
             overflow-y: auto;
+            position: relative;
+            z-index: 15;
         }
         
         .hand-area {
@@ -1771,7 +1912,37 @@
 .card{ box-shadow: 0 2px 6px rgba(0,0,0,0.10); }
 /* Default-collapse side panel on narrower screens */
   @media (max-width: 1400px){ .side-panel{ width: 240px; } .side-panel-toggle.expanded{ left: 240px; } .side-panel.collapsed{ margin-left: -240px; } }
-  @media (max-width: 768px){ .side-panel{ width: 260px; } .side-panel-toggle.expanded{ left: 260px; } .side-panel.collapsed{ margin-left: -260px; } .main-game-area{ padding-left: 0 !important; } }
+  @media (max-width: 768px){ 
+      .side-panel{ width: 260px; } 
+      .side-panel-toggle.expanded{ left: 260px; } 
+      .side-panel.collapsed{ margin-left: -260px; }
+      
+      /* Adjust table player positions for smaller screens */
+      .table-player-position {
+          min-width: 110px;
+          max-width: 140px;
+          padding: 6px 8px;
+          font-size: 11px;
+      }
+      
+      .table-player-name {
+          font-size: 11px;
+      }
+      
+      .table-player-avatar {
+          font-size: 14px;
+      }
+      
+      .table-player-stats {
+          font-size: 10px;
+      }
+      
+      .table-player-quarters {
+          width: 20px;
+          height: 20px;
+          font-size: 10px;
+      }
+  }
 
 
         .header-message{
@@ -7522,8 +7693,15 @@ const processAITurn = () => {
                     {meldError && !showingAIMelds && <div className="message-box error">{meldError}</div>}
 
                     <div className="game-content-wrapper">
-                        {/* Side Panel with Players */}
+                        {/* Scoreboard Side Panel (formerly Side Panel with Players) */}
                         <div className={`side-panel ${sidePanelCollapsed ? 'collapsed' : ''}`}>
+                            {/* Scoreboard Header */}
+                            <div style={{padding: '15px', background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)', borderBottom: '2px solid #dee2e6', color: 'white'}}>
+                                <h3 style={{margin: 0, fontSize: '18px', fontWeight: 'bold', textAlign: 'center'}}>
+                                    📊 Scoreboard
+                                </h3>
+                            </div>
+                            
                             {/* AI Speed Control */}
                             <div style={{padding: '12px', background: '#f8f9fa', borderBottom: '2px solid #dee2e6', marginBottom: '8px'}}>
                                 <div style={{display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px'}}>
@@ -7665,17 +7843,51 @@ const processAITurn = () => {
                         </div>
                         </div>
                         
-                        {/* Toggle button for side panel */}
+                        {/* Toggle button for scoreboard panel */}
                         <button 
                             className={`side-panel-toggle ${sidePanelCollapsed ? '' : 'expanded'}`}
                             onClick={() => setSidePanelCollapsed(!sidePanelCollapsed)}
-                            title={sidePanelCollapsed ? "Show Players" : "Hide Players"}
+                            title={sidePanelCollapsed ? "Show Scoreboard" : "Hide Scoreboard"}
                         >
                             {sidePanelCollapsed ? '▶' : '◀'}
                         </button>
                         
                         {/* Main game area */}
                         <div className="main-game-area">
+                        
+                            {/* Table Players - Positioned around the game area */}
+                            <div className="table-players-container">
+                                {players.map((player, idx) => (
+                                    <div 
+                                        key={player.id} 
+                                        className={`table-player-position position-${idx} ${idx === currentPlayerIndex ? 'active' : ''} ${idx === roundWinner ? 'winner' : ''}`}
+                                    >
+                                        <div className="table-player-quarters" title="Quarters" aria-label={`${player.quarters} quarters`}>
+                                            {player.quarters}
+                                        </div>
+                                        
+                                        <div className="table-player-name">
+                                            <span className="table-player-avatar">{player.avatar}</span>
+                                            <span>
+                                                {player.name}
+                                                {idx === currentPlayerIndex && ' 👈'}
+                                                {idx === dealerIndex && ' 🎴'}
+                                            </span>
+                                        </div>
+                                        <div className="table-player-stats">
+                                            <div 
+                                                onClick={() => { setScoreDetailsPlayer(player); setShowScoreDetails(true); }} 
+                                                style={{cursor: 'pointer'}}
+                                            >
+                                                Score: {player.score} 📊
+                                            </div>
+                                            {player.hand && player.hand.length > 0 && (
+                                                <div>Cards: {player.hand.length}</div>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         
                             {/* Winner's Hand - Fixed at top, outside scrollable area */}
                             {roundWinner !== null && players[roundWinner].melds.length > 0 && !allFinalPlaysComplete && (
