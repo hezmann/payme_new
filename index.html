@@ -7676,6 +7676,13 @@ const processAITurn = () => {
                             <div className="header-actions">
                                 <button 
                                     className="pause-button"
+                                    onClick={() => setSidePanelCollapsed(!sidePanelCollapsed)}
+                                    title={sidePanelCollapsed ? "Show Scoreboard" : "Hide Scoreboard"}
+                                >
+                                    📊
+                                </button>
+                                <button 
+                                    className="pause-button"
                                     onClick={() => setIsPaused(!isPaused)}
                                     title={isPaused ? "Resume" : "Pause"}
                                 >
@@ -7842,15 +7849,6 @@ const processAITurn = () => {
                             ))}
                         </div>
                         </div>
-                        
-                        {/* Toggle button for scoreboard panel */}
-                        <button 
-                            className={`side-panel-toggle ${sidePanelCollapsed ? '' : 'expanded'}`}
-                            onClick={() => setSidePanelCollapsed(!sidePanelCollapsed)}
-                            title={sidePanelCollapsed ? "Show Scoreboard" : "Hide Scoreboard"}
-                        >
-                            {sidePanelCollapsed ? '▶' : '◀'}
-                        </button>
                         
                         {/* Main game area */}
                         <div className="main-game-area">
