@@ -237,29 +237,9 @@
             margin-left: -280px;
         }
         
-        .side-panel-toggle {
-            position: fixed;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            background: white;
-            border: 2px solid #dee2e6;
-            border-left: none;
-            border-radius: 0 8px 8px 0;
-            padding: 12px 6px;
-            cursor: pointer;
-            z-index: 50;
-            transition: left 0.3s ease;
-            font-size: 18px;
-        }
-        
-        .side-panel-toggle.expanded {
-            left: 280px;
-        }
 
         /* Table Layout for Players */
         /* Z-index hierarchy: 
-         * - Side panel toggle: 50 (highest, always accessible)
          * - Hand area: 40 (player's cards, must be on top)
          * - Deck area: 20 (draw/discard piles)
          * - Winner hand fixed: 15 (winner's melds)
@@ -1678,16 +1658,6 @@
                 margin-left: -280px;
             }
             
-            .side-panel-toggle {
-                position: fixed;
-                left: 0;
-                z-index: 101;
-            }
-            
-            .side-panel-toggle.expanded {
-                left: 280px;
-            }
-            
             .main-game-area {
                 padding-left: 0;
             }
@@ -1911,10 +1881,9 @@
 .cards-container{ gap: 6px; }
 .card{ box-shadow: 0 2px 6px rgba(0,0,0,0.10); }
 /* Default-collapse side panel on narrower screens */
-  @media (max-width: 1400px){ .side-panel{ width: 240px; } .side-panel-toggle.expanded{ left: 240px; } .side-panel.collapsed{ margin-left: -240px; } }
+  @media (max-width: 1400px){ .side-panel{ width: 240px; } .side-panel.collapsed{ margin-left: -240px; } }
   @media (max-width: 768px){ 
       .side-panel{ width: 260px; } 
-      .side-panel-toggle.expanded{ left: 260px; } 
       .side-panel.collapsed{ margin-left: -260px; }
       
       /* Adjust table player positions for smaller screens */
@@ -7676,6 +7645,13 @@ const processAITurn = () => {
                             <div className="header-actions">
                                 <button 
                                     className="pause-button"
+                                    onClick={() => setSidePanelCollapsed(!sidePanelCollapsed)}
+                                    title={sidePanelCollapsed ? "Show Scoreboard" : "Hide Scoreboard"}
+                                >
+                                    📊
+                                </button>
+                                <button 
+                                    className="pause-button"
                                     onClick={() => setIsPaused(!isPaused)}
                                     title={isPaused ? "Resume" : "Pause"}
                                 >
@@ -7842,15 +7818,6 @@ const processAITurn = () => {
                             ))}
                         </div>
                         </div>
-                        
-                        {/* Toggle button for scoreboard panel */}
-                        <button 
-                            className={`side-panel-toggle ${sidePanelCollapsed ? '' : 'expanded'}`}
-                            onClick={() => setSidePanelCollapsed(!sidePanelCollapsed)}
-                            title={sidePanelCollapsed ? "Show Scoreboard" : "Hide Scoreboard"}
-                        >
-                            {sidePanelCollapsed ? '▶' : '◀'}
-                        </button>
                         
                         {/* Main game area */}
                         <div className="main-game-area">
