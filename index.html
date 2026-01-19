@@ -3930,7 +3930,7 @@ const [gamePhase, setGamePhase] = useState('draw');
             const [showCelebration, setShowCelebration] = useState(false);
             const [isPaused, setIsPaused] = useState(false);
             const isPausedRef = useRef(false);
-            const [sidePanelCollapsed, setSidePanelCollapsed] = useState(() => window.innerWidth < 768);
+            const [sidePanelCollapsed, setSidePanelCollapsed] = useState(true);
             const [celebrationName, setCelebrationName] = useState('');
             const [scoreDetailsPlayer, setScoreDetailsPlayer] = useState(null);
             const [showScoreDetails, setShowScoreDetails] = useState(false);
