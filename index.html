@@ -258,6 +258,14 @@
         }
 
         /* Table Layout for Players */
+        /* Z-index hierarchy: 
+         * - Side panel toggle: 50 (highest, always accessible)
+         * - Hand area: 40 (player's cards, must be on top)
+         * - Deck area: 20 (draw/discard piles)
+         * - Winner hand fixed: 15 (winner's melds)
+         * - Table player positions: 15 (player info cards)
+         * - Table players container: 10 (overlay container)
+         */
         .table-players-container {
             position: absolute;
             top: 0;
@@ -278,7 +286,7 @@
             min-width: 140px;
             max-width: 180px;
             pointer-events: auto; /* Enable clicks on player cards */
-            z-index: 5;
+            z-index: 15; /* Higher than container to ensure proper stacking */
         }
 
         .table-player-position.active {
@@ -7854,7 +7862,7 @@ const processAITurn = () => {
                                         key={player.id} 
                                         className={`table-player-position position-${idx} ${idx === currentPlayerIndex ? 'active' : ''} ${idx === roundWinner ? 'winner' : ''}`}
                                     >
-                                        <div className="table-player-quarters" title="Quarters">
+                                        <div className="table-player-quarters" title="Quarters" aria-label={`${player.quarters} quarters`}>
                                             {player.quarters}
                                         </div>
                                         
