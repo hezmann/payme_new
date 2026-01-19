@@ -218,10 +218,10 @@
         }
         
         .game-content-wrapper {
-            flex: 1;
-            overflow: hidden;
             display: flex;
+            flex: 1;
             flex-direction: column;
+            overflow: hidden;
         }
         
 
@@ -4460,6 +4460,24 @@ const [gamePhase, setGamePhase] = useState('draw');
                 return 'Kings';
             };
 
+            const getAiSpeedLabel = (speed) => {
+                if (speed === 0.5) return 'Slow';
+                if (speed === 1) return 'Normal';
+                if (speed === 1.5) return 'Fast';
+                if (speed === 2) return 'Faster';
+                if (speed === 2.5) return 'Very Fast';
+                return 'Max';
+            };
+
+            const getAiSpeedShortLabel = (speed) => {
+                if (speed === 0.5) return 'Slow';
+                if (speed === 1) return 'Norm';
+                if (speed === 1.5) return 'Fast';
+                if (speed === 2) return 'Fast+';
+                if (speed === 2.5) return 'V.Fast';
+                return 'Max';
+            };
+
             const drawCard = (fromDiscard) => {
                 if (gamePhase !== 'draw' && gamePhase !== 'finaldraw') return;
                 
@@ -7777,10 +7795,10 @@ const processAITurn = () => {
                                         value={aiSpeed} 
                                         onChange={(e) => setAiSpeed(parseFloat(e.target.value))}
                                         style={{width: '80px'}}
-                                        title={`AI Speed: ${aiSpeed === 0.5 ? 'Slow' : aiSpeed === 1 ? 'Normal' : aiSpeed === 1.5 ? 'Fast' : aiSpeed === 2 ? 'Faster' : aiSpeed === 2.5 ? 'Very Fast' : 'Max'}`}
+                                        title={`AI Speed: ${getAiSpeedLabel(aiSpeed)}`}
                                     />
                                     <span style={{fontSize: '9px', fontWeight: 'bold', color: '#1e3c72', minWidth: '35px'}}>
-                                        {aiSpeed === 0.5 ? 'Slow' : aiSpeed === 1 ? 'Norm' : aiSpeed === 1.5 ? 'Fast' : aiSpeed === 2 ? 'Fast+' : aiSpeed === 2.5 ? 'V.Fast' : 'Max'}
+                                        {getAiSpeedShortLabel(aiSpeed)}
                                     </span>
                                 </div>
                                 <button 
